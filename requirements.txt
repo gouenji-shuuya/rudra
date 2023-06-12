@@ -1,2 +1,2 @@
 cachetools
-https://github.com/Pycord-Development/pycord/archive/master.zip
+py-cord
