@@ -49,6 +49,8 @@ class Rudra(Bot):
     def __init__(self, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
 
+        self.owner = kwargs["owner"]
+
         # Set boot time
         self.boot_time = datetime.now()
 

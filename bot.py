@@ -40,7 +40,8 @@ discord_cache_flags = discord.MemberCacheFlags.from_intents(only_imp_intent)
 
 # Set up the bot.
 bot = Rudra(command_prefix="hhm ", intents=only_imp_intent,
-            member_cache_flags=discord_cache_flags)
+            member_cache_flags=discord_cache_flags,
+            owner=os.environ["OWNER_DEVANAGARI"])
 
 bot.load_extension("Aajnaa.aajnaa_cog")
 

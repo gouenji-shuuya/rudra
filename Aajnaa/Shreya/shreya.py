@@ -40,7 +40,8 @@ async def shreya(self, ctx: commands.Context) -> None:
     shreya.title = "**श्रेय**"
 
     shreya.add_field(name="**निर्माता**", value="गॊऎञ्जी शूऽया", inline=False)
-    shreya.add_field(name="**सङ्गणकस्वामी**", value="बाबा यागा", inline=False)
+    shreya.add_field(name="**सङ्गणकस्वामी**", value=self.bot.owner,
+                     inline=False)
 
     link = "https://www.github.com/gouenji-shuuya/rudra"
     shreya.add_field(name="**स्रोत**",
