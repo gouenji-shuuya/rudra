@@ -33,6 +33,7 @@ from Rudra.rudra import Rudra
 
 # Set intents.
 only_imp_intent = discord.Intents.none()
+only_imp_intent.message_content = True
 only_imp_intent.guild_messages = True
 only_imp_intent.guilds = True
 discord_cache_flags = discord.MemberCacheFlags.from_intents(only_imp_intent)
