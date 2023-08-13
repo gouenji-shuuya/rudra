@@ -26,6 +26,7 @@ from datetime import datetime
 
 
 # Import Pycord stuff
+import discord
 from discord.ext import commands
 
 
@@ -37,19 +38,35 @@ from discord.ext import commands
 )
 @commands.guild_only()
 @commands.has_permissions(manage_guild=True, manage_messages=True)
-async def vivarana(self, ctx: commands.Context) -> None:
+async def vivarana(self, ctx: commands.Context, yn: str = None) -> None:
     """Send bot stats."""
     uptime = "जीवनकाल : " + str(datetime.now() - self.bot.boot_time)
     uptime = uptime.replace("days", "day").replace("day", "दिन")
 
+    if yn == "y" and (await self.bot.is_owner(ctx.author)):
+        get_channel = self.bot.get_channel
+        fetch_channel = self.bot.fetch_channel
+    else:
+        get_channel = ctx.guild.get_channel
+        channel_ids = set(channel.id for channel in ctx.guild.channels)
+
+        async def fetch_channel(channel_id: int) -> discord.abc.GuildChannel:
+            if channel_id not in channel_ids:
+                raise ValueError("Channel not in guild.")
+
+            return await ctx.guild.fetch_channel(channel_id)
+        # End of fetch_channel()
+
     about_cache = ""
     for channel_id, ttl_cache in self.bot.ttl_msg_caches.items():
-        if (chann := self.bot.get_channel(channel_id)) is not None:
+        if (chann := get_channel(channel_id)) is not None:
             about_cache += (f"{chann.mention} : {ttl_cache.ttl} सॅकण्ड : "
                             f"{len(ttl_cache.keys())} सन्देश\n")
         else:
             try:
-                chann = await self.bot.fetch_channel(channel_id)
+                chann = await fetch_channel(channel_id)
+            except ValueError:
+                pass
             except Exception:
                 about_cache += (f"{channel_id} : {ttl_cache.ttl} सॅकण्ड : "
                                 f"{len(ttl_cache.keys())} सन्देश\n")
